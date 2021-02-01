@@ -1,6 +1,10 @@
-import {products} from '../../data/products.json'
+import fs from 'fs'
+import path from 'path'
 
-export default function handler(req, res){
+export default async function handler(req, res){
 
+  const dir = path.join('data', 'products.json')
+  var rawData = await fs.readFileSync(dir)
+  let products = JSON.parse(rawData);
   res.status(200).json(products)
 }

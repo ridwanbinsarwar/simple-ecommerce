@@ -1,9 +1,13 @@
-import {quantities} from '../../../../data/product_quantity.json'
 import fs from 'fs'
 import path from 'path'
 export default function handler(req, res){
+
+    const dir = path.join('data', 'product_quantity.json')
+    var rawData = fs.readFileSync(dir)
+    let quantities = JSON.parse(rawData);
+
     let id = req.query.id
-    const filtered = quantities.filter(product => product.id === id)
+    const filtered = quantities.quantities.filter(product => product.id === id)
   
     if(filtered.length <= 0){
       res.status(404).json({message: `product with id ${id} is not found`})
