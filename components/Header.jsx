@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,6 +7,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Badge from '@material-ui/core/Badge';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ListAltIcon from '@material-ui/icons/ListAlt';
+import {CartContext} from '../src/CartContext'
+
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -17,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const Header = () => {
-    const classes = useStyles();
+  const classes = useStyles();
+  const cart = useContext(CartContext)
 
   return (
     <div className={classes.root}>
@@ -32,7 +35,7 @@ const Header = () => {
               </Badge>
           </IconButton>
           <IconButton aria-label="show cart" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={cart.quantity} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
            </IconButton>

@@ -4,6 +4,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme';
 import Layout from '../components/Layout'
+import {CartProvider} from '../src/CartContext'
 
 
 export default function MyApp(props) {
@@ -37,9 +38,12 @@ export default function MyApp(props) {
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
 
         <CssBaseline />
+        <CartProvider>
         <Layout>
           <Component {...pageProps} />
         </Layout>
+        </CartProvider>
+
       </ThemeProvider>
 
     </>
