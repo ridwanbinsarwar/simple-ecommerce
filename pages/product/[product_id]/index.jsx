@@ -3,15 +3,33 @@ import {products} from '../../../data/products.json'
 import fs from 'fs'
 import path from 'path'
 import Meta from '../../../components/Meta'
+import ProductDetails from '../../../components/ProductDetails'
+import { makeStyles } from '@material-ui/core/styles';
+
 import Link from 'next/link'
 import IconButton from '@material-ui/core/IconButton'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import {CartContext} from '../../../src/CartContext'
 
-
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+  //   jus : center;
+  //   align-items: center;
+  //   text-align: center;
+  //   min-height: 100vh;
+  },
+  media: {
+    height: 300,
+  },  
+});
 
 
 export default function Product({product}) {
+  const classes = useStyles()
     // console.log(product.quantity)
     const initialState = product.quantity
     const [productQuantity, setProductQuantity] = useState(initialState)
@@ -22,15 +40,14 @@ export default function Product({product}) {
     return (
       <>
         <Meta title={product.title} description={product.description} />
-        <h1>{product.title}</h1>
-        <p>{productQuantity}</p>
-        <p>{cart.quantity}</p>
         <br/>
+        <div className={classes.root}>
+          <ProductDetails product={product} quantity={productQuantity}></ProductDetails>
 
         <IconButton onClick={ () => {
               cart.setQuantity(cart.quantity + 1)
               setProductQuantity(productQuantity-1)
-              cart.dispatch({ type: 'chomp', payload: {...product,quantity:1} })
+              cart.dispatch({ type: 'add', payload: {...product,quantity:1} })
 
             }
           } disabled={!productQuantity} color="primary" aria-label="add to shopping cart">
@@ -38,6 +55,8 @@ export default function Product({product}) {
         </IconButton>
 
         <Link href='/'>Go Back</Link>
+        </div>
+
       </>
     )
 }

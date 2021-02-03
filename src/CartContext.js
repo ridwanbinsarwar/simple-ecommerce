@@ -12,23 +12,31 @@ function reducer(items, action) {
     }
   })
 
-  if(pe>-1){
-    items[pe].quantity = items[pe].quantity + 1
-  } else {
-    items = [...items,action.payload]
+  if(action.type == "add"){
+    if(pe>-1){
+      items[pe].quantity = items[pe].quantity + 1
+    } else {
+      items = [...items,action.payload]
+    }
+  } else if(action.type == 'delete'){
+    items.splice(pe, 1);
   }
+  
 
   return items
 }
 // This context provider is passed to any component requiring the context
 export const CartProvider = ({ children }) => {
-  const [quantity, setQuantity] = useState(Number(initialState))
   
-  const [items, dispatch] = useReducer(reducer, [])
+  const [quantity, setQuantity] = useState(Number(initialState))
+  let initialItems = typeof(Storage) !== "undefined" ? JSON.parse(localStorage.getItem("items") || "[]") : []
+  initialItems = initialItems == null ? [] : initialItems
+  const [items, dispatch] = useReducer(reducer, initialItems)
 
   useEffect(() => {
     localStorage.setItem("quantity", Number(quantity))
-  }, [quantity])
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [quantity,items])
 
   return (
     <CartContext.Provider

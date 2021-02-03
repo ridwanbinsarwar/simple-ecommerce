@@ -40,7 +40,19 @@ function onSubmit() {
     console.log("objeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaact")
 }
 
+function formatDate(date) {
+  var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear()
 
+  if (month.length < 2) 
+      month = '0' + month
+  if (day.length < 2) 
+      day = '0' + day
+
+  return [year, month, day].join('-')
+}
 
 
 export default function Checkout() {
@@ -48,12 +60,13 @@ export default function Checkout() {
     const router = useRouter()
 
 
-    const { value:name, bind:bindName, reset:resetName } = useInput('');
-    const { value:phone, bind:bindPhone, reset:resetPhone } = useInput('');
-    const { value:address, bind:bindAddress, reset:resetAddress } = useInput('');
-    // let id = new Date().toLocaleDateString() + "-"+ new Date().toLocaleTimeString('en-US', { hour12: false, 
-    //     hour: "numeric", 
-    //     minute: "numeric" , second: "numeric"})+phone
+    const { value:name, bind:bindName, reset:resetName } = useInput('')
+    const { value:phone, bind:bindPhone, reset:resetPhone } = useInput('')
+    const { value:address, bind:bindAddress, reset:resetAddress } = useInput('')
+
+    let id = formatDate(new Date().toLocaleDateString()) + "-"+ new Date().toLocaleTimeString('en-US', { hour12: false, 
+        hour: "numeric", 
+        minute: "numeric" , second: "numeric"})+phone
     
     let order = JSON.stringify({
         id: id,

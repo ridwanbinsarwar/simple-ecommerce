@@ -11,18 +11,16 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
     root: {
-      maxWidth: 245,
+      maxWidth: 500,
     },
     media: {
-      height: 150,
+      height: 250,
     },  
 });
   
-export default function ProductItem ({ product }) {
-    const classes = useStyles();
+export default function ProductDetails ({ product, quantity }) {
+    const classes = useStyles()
     return (
-        <Link href={`/product/${product.id}`} >
-        <a  style={{textDecoration: "none", padding: 10}}>
             <Card className={classes.root}>
                 <CardActionArea>
                 <CardMedia
@@ -31,19 +29,20 @@ export default function ProductItem ({ product }) {
                     title="Contemplative Reptile"
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom variant="h4" component="h2">
                         {product.title}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {product.description}
+                    <Typography variant="body2"  component="p">
+                        {product.about}
                     </Typography>
-                    <Typography variant="body2" component="p">
-                       price:  {product.price}  $
+                    <Typography variant="h6" component="p">
+                       Quantity:  {quantity}
+                    </Typography>
+                    <Typography variant="h6" component="p">
+                       Price:  {product.price}  $
                     </Typography>
                 </CardContent>
                 </CardActionArea>
             </Card>
-        </a>
-        </Link>
     )
 }

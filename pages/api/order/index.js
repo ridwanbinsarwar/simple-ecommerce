@@ -19,6 +19,11 @@ export default function handler(req, res){
             address: req.body.address,
             phone: req.body.phone
         }))
+    } else {
+        const dir = path.join('data', 'orders.json')
+        var rawData = fs.readFileSync(dir)
+        let products = JSON.parse(rawData);
+        res.status(200).json(products)
     }
 }
 

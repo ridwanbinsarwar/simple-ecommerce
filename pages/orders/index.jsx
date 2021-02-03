@@ -1,6 +1,7 @@
 import React from 'react'
 
-export default function Orders({client}) {
+export default function Orders({orders}) {
+    console.log(orders)
     return (
         <div>
             <h1>Orders</h1>
@@ -9,11 +10,12 @@ export default function Orders({client}) {
 }
 
 export async function getServerSideProps(context) {
-    const res = await fetch(`http://localhost:3000/api/client/${context.params.client_id}`)
-    const client = await res.json()
+
+    const res = await fetch(`http://localhost:3000/api/order`)
+    const orders = await res.json()
     return {
         props: {
-            client,
+            orders,
         },
     }
   
