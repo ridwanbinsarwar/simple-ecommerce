@@ -14,13 +14,17 @@ export default function handler(req, res){
             id:id,
             products:req.body.products,
             price:req.body.price,
+            time: req.body.time,
+            name: req.body.name,
+            address: req.body.address,
+            phone: req.body.phone
         }))
     }
 }
 
 
-function updateClient({id,products,price}) {
-    orders.push({id,products,price})
+function updateClient({id,products,price,time,name,address,phone}) {
+    orders.push({id,products,price,time,name,address,phone})
     // update json file
     const dir = path.join('data', 'orders.json')
     let myObj = { "orders": orders };

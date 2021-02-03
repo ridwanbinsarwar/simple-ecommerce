@@ -8,6 +8,8 @@ import Badge from '@material-ui/core/Badge';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import {CartContext} from '../src/CartContext'
+import Link from 'next/link'
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
   const classes = useStyles();
   const cart = useContext(CartContext)
-
+  // console.log(cart.quantity)
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -34,15 +36,14 @@ const Header = () => {
                 <ListAltIcon />
               </Badge>
           </IconButton>
-          <IconButton aria-label="show cart" color="inherit">
-              <Badge badgeContent={cart.quantity} color="secondary">
+          <Link href='/cart' aria-label="show cart" color="inherit">
+              <Badge badgeContent={(cart.quantity).toString()} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
-           </IconButton>
+           </Link>
         </Toolbar>
       </AppBar>
     </div>
   )
 }
-
 export default Header
