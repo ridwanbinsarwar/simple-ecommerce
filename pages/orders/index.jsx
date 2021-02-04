@@ -1,16 +1,15 @@
 import React from 'react'
+import OrderList from '../../components/OrderList'
 
-export default function Orders({orders}) {
-    console.log(orders)
+export default function Orders({ orders }) {
     return (
         <div>
-            <h1>Orders</h1>
+            <OrderList orders={orders}></OrderList>
         </div>
     )
 }
 
 export async function getServerSideProps(context) {
-
     const res = await fetch(`http://localhost:3000/api/order`)
     const orders = await res.json()
     return {
@@ -18,5 +17,4 @@ export async function getServerSideProps(context) {
             orders,
         },
     }
-  
 }

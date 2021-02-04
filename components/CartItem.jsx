@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
@@ -6,8 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
-
-import {CartContext} from '../src/CartContext'
+import { CartContext } from '../src/CartContext'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,9 +30,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CartItem({item}) {
+export default function CartItem({ item, order }) {
   const classes = useStyles();
-  const cart =  useContext(CartContext)
+  const cart = useContext(CartContext)
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -53,17 +52,19 @@ export default function CartItem({item}) {
                   Quantity: {item.quantity}
                 </Typography>
               </Grid>
-              <Grid item>
-                <IconButton onClick={ () => {
+              {!order ?
+                <Grid item>
+                  <IconButton onClick={() => {
                     cart.setQuantity(cart.quantity - item.quantity)
                     // setProductQuantity(productQuantity-1)
-                    cart.dispatch({ type: 'delete', payload: {item} })
+                    cart.dispatch({ type: 'delete', payload: { ...item } })
 
-                    }
-                } color="primary" aria-label="add to shopping cart">
-                <DeleteIcon />
-                </IconButton>
-              </Grid>
+                  }
+                  } color="primary" aria-label="add to shopping cart">
+                    <DeleteIcon />
+                  </IconButton>
+                </Grid>
+                : null}
 
             </Grid>
             <Grid item>
@@ -73,7 +74,7 @@ export default function CartItem({item}) {
         </Grid>
       </Paper>
 
-    
+
     </div>
 
 

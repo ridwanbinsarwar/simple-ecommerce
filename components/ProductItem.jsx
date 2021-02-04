@@ -11,39 +11,39 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
     root: {
-      maxWidth: 245,
+        maxWidth: 245,
     },
     media: {
-      height: 150,
-    },  
+        height: 150,
+    },
 });
-  
-export default function ProductItem ({ product }) {
+
+export default function ProductItem({ product }) {
     const classes = useStyles();
     return (
         <Link href={`/product/${product.id}`} >
-        <a  style={{textDecoration: "none", padding: 10}}>
-            <Card className={classes.root}>
-                <CardActionArea>
-                <CardMedia
-                    className={classes.media}
-                    image={product.image}
-                    title="Contemplative Reptile"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {product.title}
+            <a style={{ textDecoration: "none", padding: 10 }}>
+                <Card className={classes.root}>
+                    <CardActionArea>
+                        <CardMedia
+                            className={classes.media}
+                            image={product.image}
+                            title="Contemplative Reptile"
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="h2">
+                                {product.title}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                {product.description}
+                            </Typography>
+                            <Typography variant="body2" component="p">
+                                price:  {product.price}  $
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {product.description}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                       price:  {product.price}  $
-                    </Typography>
-                </CardContent>
-                </CardActionArea>
-            </Card>
-        </a>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            </a>
         </Link>
     )
 }

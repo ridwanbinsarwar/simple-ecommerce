@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
+import { CartContext } from '../../../src/CartContext'
+import OrderDetails from '../../../components/OrderDetails'
 
-export default function Order({order}) {
-    console.log(order)
+export default function Order({ order }) {
+    const cart = useContext(CartContext)
+    useEffect(() => {
+        if (cart.quantity > 0) {
+            cart.setQuantity(0)
+            cart.dispatch({ type: "checkout" })
+            localStorage.removeItem("items")
+            localStorage.removeItem("quantity")
+        }
+    })
+
     return (
         <div>
-            <h1>order details</h1>
+            <OrderDetails order={order}> </OrderDetails>
         </div>
     )
 }
@@ -16,5 +27,4 @@ export async function getServerSideProps(context) {
             order,
         },
     }
-  
 }

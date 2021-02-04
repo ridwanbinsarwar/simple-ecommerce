@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import ProductList from '../components/ProductList'
 
-export default function Home({products}) {
+export default function Home({ products }) {
   return (
     <div>
       <ProductList products={products}></ProductList>
