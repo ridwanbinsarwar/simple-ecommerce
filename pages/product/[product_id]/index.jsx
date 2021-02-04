@@ -52,6 +52,7 @@ export default function Product({ product }) {
         <ProductDetails product={product} quantity={productQuantity}></ProductDetails>
         <IconButton onClick={() => {
           cart.setQuantity(cart.quantity + 1)
+          localStorage.setItem("quantity", Number(cart.quantity + 1))
           setProductQuantity(productQuantity - 1)
           cart.dispatch({ type: 'add', payload: { ...product, quantity: 1 } })
 

@@ -50,8 +50,9 @@ export const CartProvider = ({ children }) => {
 
   
   useEffect(() => {
-    localStorage.setItem("quantity", Number(quantity))
     localStorage.setItem("items", JSON.stringify(items));
+    console.log(typeof(Number(localStorage.getItem("quantity"))))
+    setQuantity(Number(localStorage.getItem("quantity")))
   }, [quantity,items])
 
   return (

@@ -56,6 +56,7 @@ export default function CartItem({ item, order }) {
                 <Grid item>
                   <IconButton onClick={() => {
                     cart.setQuantity(cart.quantity - item.quantity)
+                    localStorage.setItem("quantity", cart.quantity - item.quantity)
                     // setProductQuantity(productQuantity-1)
                     cart.dispatch({ type: 'delete', payload: { ...item } })
 
