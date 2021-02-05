@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 export default function handler(req, res) {
+
   const dir = path.join('data', 'products.json')
   var rawData = fs.readFileSync(dir).toString()
   let products = JSON.parse(rawData)
@@ -12,7 +13,6 @@ export default function handler(req, res) {
 
   } else {
     res.status(404).json({ message: `product with ${req.query.id} is not found` })
-
   }
 
 }

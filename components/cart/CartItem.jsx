@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { CartContext } from '../src/CartContext'
+import { CartContext } from '../../src/CartContext'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +39,7 @@ export default function CartItem({ item, order }) {
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src={item.image} />
+              <img className={classes.img} alt={item.title} src={item.image} />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>

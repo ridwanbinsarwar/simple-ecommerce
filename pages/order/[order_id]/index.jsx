@@ -1,18 +1,9 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
 import { CartContext } from '../../../src/CartContext'
-import OrderDetails from '../../../components/OrderDetails'
+import OrderDetails from '../../../components/order/OrderDetails'
 
 export default function Order({ order }) {
     const cart = useContext(CartContext)
-    useEffect(() => {
-        if (cart.quantity > 0) {
-            cart.setQuantity(0)
-            cart.dispatch({ type: "checkout" })
-            localStorage.removeItem("items")
-            localStorage.removeItem("quantity")
-        }
-    })
-
     return (
         <div>
             <OrderDetails order={order}> </OrderDetails>

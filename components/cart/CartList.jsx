@@ -1,7 +1,7 @@
 import CartItem from './CartItem'
 import Button from '@material-ui/core/Button';
 import Link from 'next/link'
-import React, { useContext } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
@@ -48,12 +48,14 @@ export default function CartList({ items }) {
             </Grid>
           </Grid>
         </Grid>
+
+        {items.orders && (items.orders.length > 0 ? true : false) ?
+          <Link href="/checkout" passHref>
+            <Button variant="contained" color="primary">
+              Checkout
+            </Button>
+          </Link> : <h1>No items in cart</h1> }
       </Paper>
-      <Link href="/checkout" passHref>
-        <Button disabled={items.orders && items.orders.length > 0 ? false : true} variant="contained" color="primary">
-          Checkout
-                </Button>
-      </Link>
     </>
 
   );

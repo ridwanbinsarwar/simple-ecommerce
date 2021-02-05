@@ -50,6 +50,11 @@ export default function Checkout() {
     // resetPhone()
     // resetAddress()
 
+    cart.setQuantity(0)
+    cart.dispatch({ type: "checkout" })
+    localStorage.removeItem("items")
+    localStorage.removeItem("quantity")
+
     router.push(`/order/${id}`)
   }
 

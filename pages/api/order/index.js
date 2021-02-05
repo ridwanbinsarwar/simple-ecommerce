@@ -5,8 +5,6 @@ import path from 'path'
 export default function handler(req, res) {
 
     let id = req.body.id
-    const filtered = orders.filter(order => order.id === id)
-
     if (req.method === 'POST') {
         // merge with previous orders
         updateQuantity(req.body.products)
@@ -39,18 +37,17 @@ function updateClient({ id, products, price, time, name, address, phone }) {
 }
 
 function updateQuantity(items) {
+
     const dir = path.join('data', 'products.json')
     var rawData = fs.readFileSync(dir).toString()
     let products = JSON.parse(rawData)
 
     for (var i = 0; i < products.products.length; i++) {
-
         items.forEach(item => {
             if (products.products[i].id === item.id) {
                 products.products[i].quantity = products.products[i].quantity - item.quantity
             }
         });
-
     }
     // update json file
     let myObj = { "products": products.products };

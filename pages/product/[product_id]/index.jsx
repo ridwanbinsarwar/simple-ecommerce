@@ -5,7 +5,7 @@ import Link from 'next/link'
 import IconButton from '@material-ui/core/IconButton'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import Meta from '../../../components/Meta'
-import ProductDetails from '../../../components/ProductDetails'
+import ProductDetails from '../../../components/product/ProductDetails'
 import { CartContext } from '../../../src/CartContext'
 import { products } from '../../../data/products.json'
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,10 +16,7 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
-  },
-  media: {
-    height: 300,
-  },
+  }
 });
 
 
@@ -31,6 +28,7 @@ export default function Product({ product }) {
   const cart = useContext(CartContext)
 
   useEffect(() => {
+    // fetch and update product quantity
     fetch(`http://localhost:3000/api/product/${product.id}`).then(res => res.json()).then(data => {
       if (cart.items.orders.length == 0) {
         setProductQuantity(data.quantity)
@@ -55,7 +53,6 @@ export default function Product({ product }) {
           localStorage.setItem("quantity", Number(cart.quantity + 1))
           setProductQuantity(productQuantity - 1)
           cart.dispatch({ type: 'add', payload: { ...product, quantity: 1 } })
-
         }
         } disabled={!productQuantity} color="primary" aria-label="add to shopping cart">
           <AddShoppingCartIcon />

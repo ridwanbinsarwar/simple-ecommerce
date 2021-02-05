@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  pointer: {
+    cursor: "pointer"
+  }
 }));
 
 const Header = () => {
@@ -27,21 +30,25 @@ const Header = () => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Link href='/' passHref>
-            <Typography variant="h6" component="h2">
-              E-Market
-            </Typography>
-          </Link>
-          <Link href='/orders' aria-label="show orders" color="inherit" passHref>
-            <Badge color="secondary">
-              <ListAltIcon />
-            </Badge>
-          </Link>
-          <Link href='/cart' aria-label="show cart" color="inherit" passHref>
-            <Badge badgeContent={(cart.quantity).toString()} color="secondary">
-              <ShoppingCartIcon />
-            </Badge>
-          </Link>
+          <div style={{display: "flex", justifyContent: "space-between", width: "100%"}}>
+            <Link href='/' passHref>
+              <Typography className ={classes.pointer} variant="h6" component="h2">
+                E-Market
+              </Typography>
+            </Link>
+            <div>
+              <Link href='/orders' aria-label="show orders" color="inherit" passHref>
+                <Badge className ={classes.pointer} color="secondary" >
+                  <ListAltIcon />
+                </Badge>
+              </Link>
+              <Link href='/cart' aria-label="show cart" color="inherit" passHref>
+                <Badge className ={classes.pointer} badgeContent={(cart.quantity).toString()} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </Link>
+            </div>
+          </div>
         </Toolbar>
       </AppBar>
     </div>

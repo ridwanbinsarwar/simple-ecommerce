@@ -5,12 +5,13 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Link from 'next/link'
 
-import { CartContext } from '../src/CartContext'
+import { CartContext } from '../../src/CartContext'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    paddingTop: 5
+    paddingTop: 5,
+    cursor: "pointer"
   },
   paper: {
     padding: theme.spacing(2),

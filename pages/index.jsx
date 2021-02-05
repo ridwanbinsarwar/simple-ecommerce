@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import ProductList from '../components/ProductList'
+import ProductList from '../components/product/ProductList'
 
 export default function Home({ products }) {
   return (

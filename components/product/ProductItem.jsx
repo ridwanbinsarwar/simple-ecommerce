@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 export default function ProductItem({ product }) {
     const classes = useStyles();
     return (
-        <Link href={`/product/${product.id}`} >
+        <Link href={`/product/${product.id}`} passHref>
             <a style={{ textDecoration: "none", padding: 10 }}>
                 <Card className={classes.root}>
                     <CardActionArea>
