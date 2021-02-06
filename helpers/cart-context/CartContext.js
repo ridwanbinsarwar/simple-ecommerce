@@ -1,8 +1,8 @@
-import React, { createContext, useState, useEffect, useReducer } from "react";
-export const CartContext = createContext();
+import React, { createContext, useState, useEffect, useReducer } from "react"
+export const CartContext = createContext()
+
 
 function reducer(items, action) {
-
 
   if(action.type == "init" && action.payload != null){
     console.log(items,action.payload)
@@ -10,17 +10,16 @@ function reducer(items, action) {
     return items
   }
 
-
   if(action.type == "checkout")
     items.orders = []
 
-  let pe = -1
+  let productIndex = -1
   let tPrice = 0
+
+  // find index of already exist product element in card
   items.orders.forEach((item,index) => {
-    if(item.id === action.payload.id){
-      pe = index
-      
-    }
+    if(item.id === action.payload.id)
+      productIndex = index
     if(item.quantity != undefined)
       tPrice = tPrice + (item.quantity * item.price)
   })
@@ -29,15 +28,15 @@ function reducer(items, action) {
     tPrice = tPrice + (action.payload.price)
     items.price = tPrice
 
-    if(pe>-1){
-      items.orders[pe].quantity = items.orders[pe].quantity + 1
+    if(productIndex>-1){
+      items.orders[productIndex].quantity = items.orders[productIndex].quantity + 1
     } else {
       items.orders = [...items.orders,action.payload]
     }
   } 
   else if(action.type == 'delete'){
-    items.price = items.price - (items.orders[pe].quantity * items.orders[pe].price )
-    items.orders.splice(pe, 1)
+    items.price = items.price - (items.orders[productIndex].quantity * items.orders[productIndex].price )
+    items.orders.splice(productIndex, 1)
   }
   localStorage.setItem("items", JSON.stringify(items))
   return items
@@ -54,7 +53,6 @@ export const CartProvider = ({ children }) => {
   }
   const [items, dispatch] = useReducer(reducer, ordersInit)
   
-
   useEffect(() => {
     const s = JSON.parse(localStorage.getItem("items")) 
     dispatch({type:'init', payload: s})
@@ -62,7 +60,6 @@ export const CartProvider = ({ children }) => {
   },[])
 
   
-
   return (
     <CartContext.Provider
       value={{
@@ -74,5 +71,5 @@ export const CartProvider = ({ children }) => {
     >
       {children}
     </CartContext.Provider>
-  );
-};
+  )
+}

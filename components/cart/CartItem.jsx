@@ -6,9 +6,9 @@ import Typography from '@material-ui/core/Typography'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { CartContext } from '../../src/CartContext'
+import { CartContext } from '../../helpers/cart-context/CartContext'
 
-const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     paddingTop: 5

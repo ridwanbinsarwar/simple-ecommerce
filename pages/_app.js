@@ -4,7 +4,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme';
 import Layout from '../components/Layout'
-import { CartProvider } from '../src/CartContext'
+import { CartProvider } from '../helpers/cart-context/CartContext'
 
 
 export default function MyApp(props) {

@@ -6,7 +6,7 @@ import Badge from '@material-ui/core/Badge'
 import Typography from '@material-ui/core/Typography'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import ListAltIcon from '@material-ui/icons/ListAlt'
-import { CartContext } from '../src/CartContext'
+import { CartContext } from '../helpers/cart-context/CartContext'
 import Link from 'next/link'
 
 

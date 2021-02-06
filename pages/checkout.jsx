@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { CartContext } from '../src/CartContext'
+import { CartContext } from '../helpers/cart-context/CartContext'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -46,10 +46,6 @@ export default function Checkout() {
       body: order
     });
 
-    // resetName()
-    // resetPhone()
-    // resetAddress()
-
     cart.setQuantity(0)
     cart.dispatch({ type: "checkout" })
     localStorage.removeItem("items")
@@ -59,9 +55,12 @@ export default function Checkout() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <>
+    <div className='form-group'>
+
+    <form  onSubmit={handleSubmit}>
       <Typography variant="h6" gutterBottom>
-        Shipping address
+        Shipping Information
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
@@ -98,8 +97,28 @@ export default function Checkout() {
         </Grid>
 
       </Grid>
-      <Button type="submit">Place Order</Button>
+      <div className="form-group">
+        <Button variant="outlined" color="primary" type="submit">Place Order</Button>
+
+      </div>
+
     </form>
+    <style jsx>
+                {
+                    `
+                        .form-group{
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            margin: 5px;
+                            
+                        } 
+                    `
+                }
+        </style>
+      </div>
+
+    </>
   )
 }
 

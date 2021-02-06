@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { CartContext } from '../../../src/CartContext'
+import { CartContext } from '../../../helpers/cart-context/CartContext'
 import OrderDetails from '../../../components/order/OrderDetails'
 
 export default function Order({ order }) {

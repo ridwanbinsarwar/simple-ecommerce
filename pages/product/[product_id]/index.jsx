@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import Meta from '../../../components/Meta'
 import ProductDetails from '../../../components/product/ProductDetails'
-import { CartContext } from '../../../src/CartContext'
+import { CartContext } from '../../../helpers/cart-context/CartContext'
 import { products } from '../../../data/products.json'
 import { makeStyles } from '@material-ui/core/styles';
 
