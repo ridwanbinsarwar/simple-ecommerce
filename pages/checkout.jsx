@@ -25,7 +25,7 @@ export default function Checkout() {
       hour: "numeric",
       minute: "numeric", second: "numeric"
     }) + phone
-    
+
     setOrder({
       id: id,
       products: cart.items.orders,
@@ -35,130 +35,104 @@ export default function Checkout() {
       address: address,
       price: cart.items.price
     })
-    // console.log(cart.items);
-    // console.log(order);
-  },[cart.items])
 
- 
-   async function handleSubmit (){
-    console.log("----------",cart.items)
+  }, [cart.items])
 
-     console.log("----------",{...cart.items})
-    //  console.log(order);
-    // evt.preventDefault()
-    let res = await fetch('http://localhost:3000/api/order', {
+  async function submitOrder() {
+    return await fetch('http://localhost:3000/api/order', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body:JSON.stringify(order)
+      body: JSON.stringify(order)
+    }).then(res => {
+      return res.json()
     })
 
-      console.log(res.status)
+  }
 
-      if(res.status == 400){
-        res.json().then(data => {
-          
-          let tPrice = 0
-          
-            let q = 0
+  async function handleSubmit() {
+
+    if (order.products.length <= 0) {
+      alert("Cart is empty")
+      router.push(`/`)
+    } else {
+
+      let res = await submitOrder()
+
+      if (res.status == 400) {
+
+        cart.dispatch({ type: 'revalidate', payload: res.products })
+        alert("Cart updated. All products are not avaialbe now. ")
+        router.push(`/cart`)
 
 
-
-            for(let i =0; i<items.orders.length; i++){
-              // console.log(items.orders[i].id, action.payload[i].id);
-              if(items.orders[i].id === action.payload[i].id){
-                items.orders[i].quantity = action.payload[i].quantity;
-
-              }
-              q += items.orders[i].quantity
-              if(items.orders[i].quantity == 0){
-                items.orders.splice(i, 1)
-
-              }
-
-              tPrice = tPrice + (action.payload[i].quantity * items.orders[i].price)
-            }
-
-            items.price = tPrice;
-            console.log(items);
-            // items.orders = action.payload
-            // localStorage.removeItem("quantity")
-            // localStorage.removeItem("items")
-
-            localStorage.setItem("items", JSON.stringify(items))
-
-            
-          
-
-    
-        })
       }
-    if (res.status == 200){
-      cart.setQuantity(0)
+      if (res.status == 200) {
+        cart.setQuantity(0)
         cart.dispatch({ type: "checkout" })
         localStorage.removeItem("items")
         localStorage.removeItem("quantity")
-    
+
         router.push(`/order/${order.id}`)
+      }
     }
 
-    console.log(res);
   }
 
   return (
     <>
-    <div className='form-group'>
+      <div className='form-group'>
 
-    <div  >
-      <Typography variant="h6" gutterBottom>
-        Shipping Information
+        <div  >
+          <Typography variant="h6" gutterBottom>
+            Shipping Information
       </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="name"
-            name="name"
-            label="Full Name"
-            fullWidth
-            {...bindName}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="phone"
-            name="phone"
-            label="phone no"
-            fullWidth
-            {...bindPhone}
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="name"
+                name="name"
+                label="Full Name"
+                fullWidth
+                {...bindName}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="phone"
+                name="phone"
+                label="phone no"
+                fullWidth
+                {...bindPhone}
 
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="address"
-            name="address"
-            label="Address line "
-            fullWidth
-            {...bindAddress}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="address"
+                name="address"
+                label="Address line "
+                fullWidth
+                {...bindAddress}
 
-          />
-        </Grid>
+              />
+            </Grid>
 
-      </Grid>
-      <div className="form-group">
-        <Button onClick={handleSubmit} variant="outlined" color="primary" >Place Order</Button>
+          </Grid>
+          <div className="form-group">
+            <Button onClick={handleSubmit} variant="outlined" color="primary" >Place Order</Button>
 
-      </div>
+          </div>
 
-    </div>
-    <style jsx>
-                {
-                    `
+        </div>
+        <style jsx>
+          {
+            `
                         .form-group{
                             display: flex;
                             flex-direction: column;
@@ -167,7 +141,7 @@ export default function Checkout() {
                             
                         } 
                     `
-                }
+          }
         </style>
       </div>
 

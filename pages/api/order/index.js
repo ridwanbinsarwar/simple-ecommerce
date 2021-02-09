@@ -8,12 +8,11 @@ export default function handler(req, res) {
     if (req.method === 'POST') {
         // merge with previous orders
         let pavailable = updateQuantity(req)
-        console.log(pavailable, req.body.products);
 
         if(pavailable == -1){
 
-            res.status(400).json(req.body.products)
-
+            res.status(400).json({products:req.body.products, status:400 })
+            
         }else {
 
             res.status(200).json(
@@ -42,7 +41,7 @@ function updateClient({ id, products, price, time, name, address, phone }) {
     const dir = path.join('data', 'orders.json')
     let myObj = { "orders": orders };
     fs.writeFileSync(dir, JSON.stringify(myObj))
-    return { id, products, price }
+    return { id, products, price, status:200 }
 }
 
 function updateQuantity(req) {
