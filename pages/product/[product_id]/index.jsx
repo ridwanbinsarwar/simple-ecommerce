@@ -66,7 +66,6 @@ export default function Product({ product }) {
 
 export async function getStaticProps(context) {
   // api call does not work in production
-
   let product_id = context.params.product_id
   const dir = path.join('data', 'products.json')
   var rawData = fs.readFileSync(dir)

@@ -4,17 +4,23 @@ export const CartContext = createContext()
 
 function reducer(items, action) {
 
+
+
+
   if(action.type == "init" && action.payload != null){
     console.log(items,action.payload)
     items = action.payload
     return items
   }
 
+
+
+
   if(action.type == "checkout")
     items.orders = []
 
   let productIndex = -1
-  let tPrice = 0
+  
 
   // find index of already exist product element in card
   items.orders.forEach((item,index) => {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { CartContext } from '../helpers/cart-context/CartContext'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -10,55 +10,108 @@ import { useRouter } from 'next/router'
 
 export default function Checkout() {
   const cart = useContext(CartContext)
-  const router = useRouter()
 
+  const router = useRouter()
 
   const { value: name, bind: bindName, reset: resetName } = useInput('')
   const { value: phone, bind: bindPhone, reset: resetPhone } = useInput('')
   const { value: address, bind: bindAddress, reset: resetAddress } = useInput('')
 
-  let id = formatDate(new Date().toLocaleDateString()) + "-" + new Date().toLocaleTimeString('en-US', {
-    hour12: false,
-    hour: "numeric",
-    minute: "numeric", second: "numeric"
-  }) + phone
+  const [order, setOrder] = useState({})
 
-  let order = JSON.stringify({
-    id: id,
-    products: cart.items.orders,
-    time: new Date().toLocaleString(),
-    name: name,
-    phone: phone,
-    address: address,
-    price: cart.items.price
-  })
+  useEffect(() => {
+    let id = formatDate(new Date().toLocaleDateString()) + "-" + new Date().toLocaleTimeString('en-US', {
+      hour12: false,
+      hour: "numeric",
+      minute: "numeric", second: "numeric"
+    }) + phone
+    
+    setOrder({
+      id: id,
+      products: cart.items.orders,
+      time: new Date().toLocaleString(),
+      name: name,
+      phone: phone,
+      address: address,
+      price: cart.items.price
+    })
+    // console.log(cart.items);
+    // console.log(order);
+  },[cart.items])
 
+ 
+   async function handleSubmit (){
+    console.log("----------",cart.items)
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault()
-
-    fetch('http://localhost:3000/api/order', {
+     console.log("----------",{...cart.items})
+    //  console.log(order);
+    // evt.preventDefault()
+    let res = await fetch('http://localhost:3000/api/order', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: order
-    });
+      body:JSON.stringify(order)
+    })
 
-    cart.setQuantity(0)
-    cart.dispatch({ type: "checkout" })
-    localStorage.removeItem("items")
-    localStorage.removeItem("quantity")
+      console.log(res.status)
 
-    router.push(`/order/${id}`)
+      if(res.status == 400){
+        res.json().then(data => {
+          
+          let tPrice = 0
+          
+            let q = 0
+
+
+
+            for(let i =0; i<items.orders.length; i++){
+              // console.log(items.orders[i].id, action.payload[i].id);
+              if(items.orders[i].id === action.payload[i].id){
+                items.orders[i].quantity = action.payload[i].quantity;
+
+              }
+              q += items.orders[i].quantity
+              if(items.orders[i].quantity == 0){
+                items.orders.splice(i, 1)
+
+              }
+
+              tPrice = tPrice + (action.payload[i].quantity * items.orders[i].price)
+            }
+
+            items.price = tPrice;
+            console.log(items);
+            // items.orders = action.payload
+            // localStorage.removeItem("quantity")
+            // localStorage.removeItem("items")
+
+            localStorage.setItem("items", JSON.stringify(items))
+
+            
+          
+
+    
+        })
+      }
+    if (res.status == 200){
+      cart.setQuantity(0)
+        cart.dispatch({ type: "checkout" })
+        localStorage.removeItem("items")
+        localStorage.removeItem("quantity")
+    
+        router.push(`/order/${order.id}`)
+    }
+
+    console.log(res);
   }
 
   return (
     <>
     <div className='form-group'>
 
-    <form  onSubmit={handleSubmit}>
+    <div  >
       <Typography variant="h6" gutterBottom>
         Shipping Information
       </Typography>
@@ -98,11 +151,11 @@ export default function Checkout() {
 
       </Grid>
       <div className="form-group">
-        <Button variant="outlined" color="primary" type="submit">Place Order</Button>
+        <Button onClick={handleSubmit} variant="outlined" color="primary" >Place Order</Button>
 
       </div>
 
-    </form>
+    </div>
     <style jsx>
                 {
                     `
