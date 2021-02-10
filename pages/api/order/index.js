@@ -36,6 +36,7 @@ export default function handler(req, res) {
 
 
 function updateClient({ id, products, price, time, name, address, phone }) {
+    // console.log({ id, products, price, time, name, address, phone })
     orders.push({ id, products, price, time, name, address, phone })
     // update json file
     const dir = path.join('data', 'orders.json')

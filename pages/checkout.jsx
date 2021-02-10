@@ -36,7 +36,7 @@ export default function Checkout() {
       price: cart.items.price
     })
 
-  }, [cart.items])
+  }, [name,phone,address])
 
   async function submitOrder() {
     return await fetch('http://localhost:3000/api/order', {
@@ -52,7 +52,8 @@ export default function Checkout() {
 
   }
 
-  async function handleSubmit() {
+  const handleSubmit = async (evt) => {
+    evt.preventDefault()
 
     if (order.products.length <= 0) {
       alert("Cart is empty")
@@ -83,7 +84,7 @@ export default function Checkout() {
 
   return (
     <>
-      <div className='form-group'>
+      <form onSubmit={handleSubmit} className='form-group'>
 
         <div  >
           <Typography variant="h6" gutterBottom>
@@ -125,7 +126,7 @@ export default function Checkout() {
 
           </Grid>
           <div className="form-group">
-            <Button onClick={handleSubmit} variant="outlined" color="primary" >Place Order</Button>
+            <Button  variant="outlined" color="primary" type="submit" >Place Order</Button>
 
           </div>
 
@@ -143,7 +144,7 @@ export default function Checkout() {
                     `
           }
         </style>
-      </div>
+      </form>
 
     </>
   )
